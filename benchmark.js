@@ -34,7 +34,10 @@ Benchmark.prototype.getTarget = function() {
             var t1 = Date.now()
             stemmer.func(line, function(err, tokens) {
                 var t2 = Date.now()
-                if (err) return cb(err)
+                if (err) {
+                    console.error(err.stack)
+                    tokens = []
+                }
 
                 stemmer.time += t2 - t1
 
