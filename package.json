@@ -1,0 +1,16 @@
+{
+  "name": "js-stemmer-comparison",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elasticsearch": "^5.0.0",
+    "natural": "^0.2.1",
+    "through2": "^2.0.0"
+  }
+}
