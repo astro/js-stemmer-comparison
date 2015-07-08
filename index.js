@@ -5,6 +5,7 @@ var Benchmark = require('./benchmark')
 var lancasterStemmer = require('lancaster-stemmer')
 var snowballStemmer = new (require('snowball'))('English')
 var porterStemmer = require('stemmer')
+var STM = require('stm')
 
 process.on('uncaughtException', function(err) {
     console.error(err.stack)
@@ -75,6 +76,16 @@ function porter(text, cb) {
     cb(err, result)
 }
 
+function stm(text, cb) {
+    var err, result
+    try {
+        result = STM.stem(text)
+    } catch (e) {
+        err = e
+    }
+    cb(err, result)
+}
+
 function simpleTokenize(text) {
     return text.split(/\W+/)
 }
@@ -86,6 +97,7 @@ bm.addStemmer('natural.Lancaster', naturalStemmer(natural.LancasterStemmer))
 bm.addStemmer('lancaster', lancaster)
 bm.addStemmer('snowball', snowball)
 bm.addStemmer('porter', porter)
+bm.addStemmer('stm', stm)
 
 setInterval(bm.report.bind(bm), 1000)
 
