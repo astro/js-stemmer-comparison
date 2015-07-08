@@ -27,7 +27,7 @@ Benchmark.prototype.getTarget = function() {
             if (i >= this.stemmers.length) {
                 // all stemmers done
                 this.linesProcessed++
-                return cb()
+                return setImmediate(cb)
             }
 
             var stemmer = this.stemmers[i]
