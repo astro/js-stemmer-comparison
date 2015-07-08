@@ -25,7 +25,7 @@ function esGetTokens(text, cb) {
     }, function(err, result) {
 	if (err) return cb(err)
         
-	cb(null, result.tokens.map(function(token) {
+	cb(null, (result.tokens || []).map(function(token) {
 	    return token.token
 	}))
     })
