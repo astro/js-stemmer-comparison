@@ -71,7 +71,7 @@ Benchmark.prototype.report = function() {
     var labelize = function (fun) {
         return this.stemmers.map(function(stemmer) {
             return stemmer.name + "=" + fun(stemmer)
-        }).join("\t")
+        }).join(" ")
     }.bind(this)
 
     var baseTime = this.stemmers[0].time

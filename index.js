@@ -18,9 +18,8 @@ var es = new Elasticsearch.Client({
 })
 function esGetTokens(text, cb) {
     es.indices.analyze({
-        // TODO: import create_es_index.sh
 	analyzer: 'html_english_analyzer',
-	index: 'cave',
+	index: 'stemmer-comparison',
 	body: "" + text
     }, function(err, result) {
 	if (err) return cb(err)
