@@ -43,8 +43,8 @@ Benchmark.prototype.getTarget = function() {
 
                 var str = tokens.join(" ")
                 if (!baseStr) baseStr = str
-                var distance = natural.LevenshteinDistance(baseStr, str)
-                stemmer.distance += distance / line.length
+                var distance = natural.LevenshteinDistance(baseStr, str) / line.length
+                stemmer.distance += distance
                 if (!stemmer.worst || stemmer.worst.distance < distance) {
                     stemmer.worst = {
                         distance: distance,
