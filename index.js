@@ -2,6 +2,7 @@ var Elasticsearch = require('elasticsearch')
 var natural = require('natural')
 var split = require('split')
 var Benchmark = require('./benchmark')
+var lancasterStemmer = require('lancaster-stemmer')
 
 process.on('uncaughtException', function(err) {
     console.error(err.stack)
@@ -38,10 +39,27 @@ function naturalStemmer(stemmer) {
     }
 }
 
+function lancaster(text, cb) {
+    var err, result
+    try {
+        result = simpleTokenize(text).map(function(token) {
+            return lancasterStemmer(token)
+        })
+    } catch (e) {
+        err = e
+    }
+    cb(err, result)
+}
+
+function simpleTokenize(text) {
+    return text.split(/\W+/)
+}
+
 var bm = new Benchmark()
 bm.addStemmer('ES', esGetTokens)
 bm.addStemmer('natural.Porter', naturalStemmer(natural.PorterStemmer))
 bm.addStemmer('natural.Lancaster', naturalStemmer(natural.LancasterStemmer))
+bm.addStemmer('lancaster', lancaster)
 
 setInterval(bm.report.bind(bm), 1000)
 

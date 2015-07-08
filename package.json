@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "elasticsearch": "^5.0.0",
+    "lancaster-stemmer": "^0.1.4",
     "natural": "^0.2.1",
     "split": "^1.0.0",
     "through2": "^2.0.0"
