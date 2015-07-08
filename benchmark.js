@@ -18,6 +18,7 @@ Benchmark.prototype.addStemmer = function(name, func) {
 
 Benchmark.prototype.getTarget = function() {
     return through({ decodeStrings: false, objectMode: true, allowHalfOpen: false }, function(line, enc, cb) {
+        line = ("" + line).replace(/^\s+/, "").replace(/\s+$/, "")
         if (!line) return cb()
 
         var i = 0
