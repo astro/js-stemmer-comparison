@@ -6,6 +6,7 @@ var lancasterStemmer = require('lancaster-stemmer')
 var snowballStemmer = new (require('snowball'))('English')
 var porterStemmer = require('stemmer')
 var STM = require('stm')
+var NLPToolkit = require('nlp-toolkit')
 
 process.on('uncaughtException', function(err) {
     console.error(err.stack)
@@ -86,6 +87,19 @@ function stm(text, cb) {
     cb(err, result)
 }
 
+function nlpToolkit(tokenizer) {
+    return function(text, cb) {
+        var err, result
+        try {
+            result = tokenizer.tokenize(text)
+            if (typeof result === 'string') result = [result]
+        } catch (e) {
+            err = e
+        }
+        cb(err, result)
+    }
+}
+
 function simpleTokenize(text) {
     return text.split(/\W+/)
 }
@@ -98,6 +112,7 @@ bm.addStemmer('lancaster', lancaster)
 bm.addStemmer('snowball', snowball)
 bm.addStemmer('porter', porter)
 bm.addStemmer('stm', stm)
+bm.addStemmer('nlp.porter', nlpToolkit(new NLPToolkit.tokenizer({ stopwords: 'english', porter: true })))
 
 setInterval(bm.report.bind(bm), 1000)
 
