@@ -45,6 +45,14 @@ Benchmark.prototype.getTarget = function() {
                 if (!baseStr) baseStr = str
                 var distance = natural.LevenshteinDistance(baseStr, str)
                 stemmer.distance += distance / line.length
+                if (!stemmer.worst || stemmer.worst.distance < distance) {
+                    stemmer.worst = {
+                        distance: distance,
+                        line: line,
+                        baseStr: baseStr,
+                        str: str
+                    }
+                }
 
                 i++
                 next()
@@ -74,4 +82,19 @@ Benchmark.prototype.report = function() {
     console.log("Avg distances: " + labelize(function(stemmer) {
         return Math.round(1000 * stemmer.distance / this.linesProcessed) / 1000
     }.bind(this)))
+}
+
+Benchmark.prototype.reportFull = function() {
+    this.report()
+
+    this.stemmers.forEach(function(stemmer) {
+        var worst = stemmer.worst
+        if (worst && worst.distance > 0) {
+            console.log("*** Worst for " + stemmer.name + " with distance=" + worst.distance + " ***")
+            console.log("   Input: " + worst.line)
+            console.log("    Base: " + worst.baseStr)
+            console.log("  Result: " + worst.str)
+            console.log()
+        }
+    })
 }

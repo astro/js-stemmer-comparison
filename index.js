@@ -125,6 +125,6 @@ process.stdin.
     }).
     on('end', function() {
         console.log("Done")
-        bm.report()
+        bm.reportFull()
         process.exit()
     })
